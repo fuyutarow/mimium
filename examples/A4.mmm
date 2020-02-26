@@ -1,0 +1,15 @@
+mC4 = 60 
+// MIDI note number of A4
+mA4 = 69
+// freq of A4
+fA4 = 440
+
+fn mtof(mnum){
+    return fA4 * 2 ^ ((mnum - mA4)/12) 
+}
+phasor = |f:float|{return (self+f/48000)%1}
+sq = |f:float|{return (phasor(f)>0.5) - 0.5 }
+
+fn dsp(time){
+    return sq(mtof(mC4))
+}
