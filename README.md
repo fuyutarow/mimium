@@ -34,6 +34,28 @@ Calling function with `@` specifies the time when the function will be executed.
 An event scheduling for this mechanism is driven by a clock from an audio driver thus have a sample-accuracy.
 
 <!-- More specific info about language is currently in [design](design/design-proposal.md) section. -->
+
+# Installation (In my case, on 2020-02-26)
+Requirement
+- macOS
+- Xcode
+- llvm `brew install llvm`
+
+```sh
+brew install cmake bison flex libsndfile rt-audio
+git clone https://github.com/mimium-org/mimium mimium
+cd $_
+(
+export PATH="/usr/local/opt/llvm/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/llvm/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm/include"
+mkdir build && cd build
+cmake ..
+cmake --build . --target default_build -j
+cmake --build . --target install
+)
+```
+
 # Download
 
 You can download from [release](https://github.com/mimium-org/mimium/releases) section.
