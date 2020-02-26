@@ -1,0 +1,83 @@
+// constants
+// ========= 
+fA4 = 440
+
+mC3 = 48
+mD3 = 50
+mE3 = 52
+mF3 = 53
+mG3 = 55
+mA3 = 57
+mB3 = 59
+mC4 = 60
+mD4 = 62
+mE4 = 64
+mF4 = 65
+mG4 = 67
+mA4 = 69
+mB4 = 71
+mC5 = 72
+
+// score
+// ===== 
+mnum = 60
+fn setval(val){
+    mnum = val
+}
+interval = 20000
+fn loopnote()->void{
+    setval(mC4)@(now+0*interval)
+    setval(mD4)@(now+1*interval)
+    setval(mE4)@(now+2*interval)
+    setval(mF4)@(now+3*interval)
+
+    setval(mE4)@(now+5*interval)
+    setval(mD4)@(now+6*interval)
+    setval(mC4)@(now+7*interval)
+
+    setval(mE4)@(now+9*interval)
+    setval(mF4)@(now+10*interval)
+    setval(mG4)@(now+11*interval)
+    setval(mA4)@(now+12*interval)
+
+    setval(mG4)@(now+13*interval)
+    setval(mF4)@(now+14*interval)
+    setval(mE4)@(now+15*interval)
+
+    setval(mC4)@(now+17*interval)
+    setval(0)@(now+18*interval)
+    setval(mC4)@(now+19*interval)
+    setval(0)@(now+20*interval)
+    setval(mC4)@(now+21*interval)
+    setval(0)@(now+22*interval)
+    setval(mC4)@(now+23*interval)
+    setval(0)@(now+24*interval)
+
+    setval(mC4)@(now+25*interval)
+    setval(mD4)@(now+26*interval)
+    setval(mE4)@(now+27*interval)
+    setval(mF4)@(now+28*interval)
+
+    setval(mE4)@(now+29*interval)
+    setval(mD4)@(now+30*interval)
+    setval(mC4)@(now+31*interval)
+
+    setval(0)@(now+33*interval)
+
+    loopnote()@(now+40*interval)
+}
+
+// Effecter
+// ========
+fn mtof(mnum){
+    return fA4 * 2 ^ ((mnum - mA4)/12) 
+}
+phasor = |f:float|{return (self+f/48000)%1}
+sq = |f:float|{return (phasor(f)>0.5) - 0.5 }
+
+// Play
+// ====
+fn dsp(time){
+    return sq(mtof(mnum)) 
+}
+loopnote()@0
